@@ -5,19 +5,18 @@ function jpReady(str) {    if (str != undefined) {      return str.replace(/\?/g
 function cleanMatches(str) {    if (str != undefined) {      let matches = str.match(/(?<=<a href="http.{0,1}:\/\/).+?(?=")/g);      if (matches != null) {        let arr = Array.from(matches).map(el => {          return jpReady(el.replace(/\/$/, '').replace(/.+wikipedia.+|.+www.w3.org.+|.+microsoft.com.+/g, ''));        });        return arr.filter(String);      } else {        return '';      }    } else {      return '';    }  }
 
 
-var nameArr = ["Brittney", "Cristina", "Elizabeth"];
+var nameArr = ['Brittney','Cristina','Elizabeth'];
 
 function opener(elm, n) {
   setTimeout(() => {
-    var searchLink = "https://api.stackexchange.com/2.2/users?pagesize=99&order=desc&sort=reputation&inname=" + elm + "&site=stackoverflow&filter=XJ.7f)7Zg)UC4&page=3";
-
+    var searchLink = 'https://api.stackexchange.com/2.2/users?pagesize=99&order=desc&sort=reputation&inname=' + elm + '&site=stackoverflow&filter=XJ.7f)7Zg)UC4&page=3';
     var wnd = window.open(searchLink);
 	
     setTimeout(() => {
       var outArrObj = [];
       var items = JSON.parse(wnd.document.body.innerText).items;
-      var s_geo = "Boston";
-      var regXgeo = new RegExp(s_geo, "i");
+      var s_geo = 'Boston';
+      var regXgeo = new RegExp(s_geo, 'i');
       for (i = 0; i < items.length; i++) {
         let geo = jpReady(items[i].location);
         let about = items[i].about_me;
@@ -27,14 +26,14 @@ function opener(elm, n) {
         let stackLink = vld(/(?<=stackoverflow\.com\/users\/).+/.exec(items[i].link), 0);
         if (regXgeo.test(geo) === true) {
           outArrObj.push({
-            "fn": items[i].display_name,
-            "geo": geo,
-            "id": items[i].user_id,
-            "cd": items[i].creation_date,
-            "st": stackLink,
-            "tw": twitter,
-            "em": email,
-            "web": weblinks
+            'fn': items[i].display_name,
+            'geo': geo,
+            'id': items[i].user_id,
+            'cd': items[i].creation_date,
+            'st': stackLink,
+            'tw': twitter,
+            'em': email,
+            'web': weblinks
           });
         }
       }
@@ -42,7 +41,7 @@ function opener(elm, n) {
       var out = JSON.stringify(outArrObj);
       console.log(out);
 	if(outArrObj.length > 0){
-      var winjp = window.open("https://script.google.com/macros/s/AKfycbx67X5G-_PW9URN8JkxKAIZYYHSx0_23ukD2CQ9-Pt0Z5K33sjA/exec?o=" + out);
+      var winjp = window.open('https://script.google.com/macros/s/AKfycbx67X5G-_PW9URN8JkxKAIZYYHSx0_23ukD2CQ9-Pt0Z5K33sjA/exec?o=' + out);
     }
       setTimeout(() => {
         winjp.close();
